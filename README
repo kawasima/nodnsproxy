@@ -1,0 +1,32 @@
+nodnsproxy is a proxy tool for the environment inside the firewall.
+Inside the firewall, it often the case that we can't access the external DNS from our PC. So, we can't browse Internet freely.
+
+setup
+========
+
+I provide two solutions to convert domain name to IP address without DNS.
+
+1. If you use hosts file,
+
+Write this in conf/rabbit.conf.
+
+  [net.unit8.nodnsproxy.IPAccessFilter]
+  dnsHandler=net.unit8.nodnsproxy.DNSFileHandler
+
+
+2. If you use web API,
+
+First, put cgi/dns.cgi to your server outside the proxy.
+Next, write this in conf/rabbit.conf
+
+  [net.unit8.nodnsproxy.IPAccessFilter]
+  dnsHandler=net.unit8.nodnsproxy.DNSCgiHandler
+
+  [net.unit8.nodnsproxy.DNSCgiHandler]
+  cgiUrl=http://[your-external-siteIP]/dns.cgi
+  # optional. if it's nessesary to access your cgi via proxy, set this.
+  proxyhost=
+  proxyport=
+
+
+
